@@ -8,10 +8,30 @@
                 </div>
                 
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="{{ route('dashboard') }}" class="text-gray-600 hover:text-blue-600 transition-colors font-medium">Dashboard</a>
-                    <a href="{{ route('laporan.index') }}" class="text-blue-600 font-semibold">Laporan</a>
-                    <a href="{{ route('pengguna') }}" class="text-gray-600 hover:text-blue-600 transition-colors font-medium">Pengguna</a>
-                </div>
+    <a href="{{ route('dashboard') }}"
+       class="{{ request()->routeIs('dashboard') 
+            ? 'text-blue-600 font-semibold' 
+            : 'text-gray-600 hover:text-blue-600 transition-colors font-medium' }}">
+        Dashboard
+    </a>
+
+    <a href="{{ route('laporan.index') }}"
+       class="{{ request()->routeIs('laporan.*') 
+            ? 'text-blue-600 font-semibold' 
+            : 'text-gray-600 hover:text-blue-600 transition-colors font-medium' }}">
+        Laporan
+    </a>
+
+    @if (Auth::user() && Auth::user()->role === 'admin')
+        <a href="{{ route('pengguna') }}"
+           class="{{ request()->routeIs('pengguna') 
+                ? 'text-blue-600 font-semibold' 
+                : 'text-gray-600 hover:text-blue-600 transition-colors font-medium' }}">
+            Pengguna
+        </a>
+    @endif
+</div>
+
 
                 <div class="flex items-center space-x-4">
                     <button class="p-2 text-gray-600 hover:text-blue-600 transition-colors">

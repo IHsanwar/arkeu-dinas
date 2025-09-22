@@ -134,6 +134,13 @@
                     </button>
                 </div>
                 @endif
+                <div class="flex items-end">
+                    <div class="relative">
+                        <a href="/laporan/download"  class="bg-gray-100 text-gray-700 px-4 py-3 rounded-lg hover:bg-gray-200 transition-colors font-medium flex items-center space-x-2">
+                            <span>Cetak PDF</span>
+                        </a>
+                    </div>
+</div>
             </div>
         </div>
 
@@ -143,11 +150,12 @@
                 <div class="flex justify-between items-center">
                     <h3 class="text-lg font-semibold text-gray-900">Daftar Audit</h3>
                     <div class="flex space-x-3">
+                        <!--
                         <button onclick="exportData()" class="text-gray-600 hover:text-blue-600 transition-colors" title="Export">
                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/>
                             </svg>
-                        </button>
+                        </button> -->
                     </div>
                 </div>
             </div>

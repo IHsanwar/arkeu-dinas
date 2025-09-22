@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Laporan;
 use Illuminate\Http\Request;
 
+use Barryvdh\DomPDF\Facade\Pdf;
 class LaporanController extends Controller
 {
     public function index()
@@ -65,7 +66,17 @@ class LaporanController extends Controller
             return redirect()->route('laporan.index')->with('success', 'Laporan berhasil diperbarui');
         }
 
+        public function download()
+    {
+        $laporan = Laporan::all();
 
+        // Generate PDF dari view
+        $pdf = Pdf::loadView('laporan.pdf', compact('laporan'))
+                  ->setPaper('A4', 'portrait');
+
+        // Download file dengan nama sesuai tanggal
+        return $pdf->download('laporan-keuangan-' . now()->format('Y-m-d') . '.pdf');
+    }
 
     public function destroy($id)
 {

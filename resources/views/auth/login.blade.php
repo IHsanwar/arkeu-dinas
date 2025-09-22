@@ -17,7 +17,12 @@
     </style>
 </head>
 <body class="min-h-screen flex">
-
+@error('email')
+    <div class="fixed top-0 left-0 w-full bg-red-600 text-white text-center py-2 z-50">
+        {{ $message }}
+    </div>
+    
+@enderror
     <!-- Left Side -->
     <div class="w-full lg:w-2/5 bg-white flex items-center justify-center p-8">
         <div class="w-full max-w-md">

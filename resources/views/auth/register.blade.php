@@ -72,6 +72,11 @@
     </style>
 </head>
 <body class="min-h-screen flex">
+    @error('email')
+        <div class="fixed top-0 left-0 w-full bg-red-600 text-white text-center py-2 z-50">
+            {{ $message }}
+        </div>
+    @enderror
     <!-- Left Panel - Form -->
     <div class="w-full lg:w-1/2 flex items-center justify-center p-8 form-glass">
         <div class="w-full max-w-md fade-in">

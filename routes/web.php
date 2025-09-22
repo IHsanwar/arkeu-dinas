@@ -16,13 +16,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
+    Route::patch('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.update.password');
+    
     Route::get('/laporan', [LaporanController::class,'index'])->name('laporan.index');
     Route::post('/laporan', [LaporanController::class,'store'])->name('laporan.store');
     Route::delete('/laporan/{id}', [LaporanController::class,'destroy'])->name('laporan.destroy');
     Route::get('/laporan/{id}/edit', [LaporanController::class,'edit'])->name('laporan.edit');
     Route::put('/laporan/{id}', [LaporanController::class,'update'])->name('laporan.update');
-
+    Route::get('/laporan/download', [LaporanController::class, 'download'])
+        ->name('laporan.download');
 
 
     
