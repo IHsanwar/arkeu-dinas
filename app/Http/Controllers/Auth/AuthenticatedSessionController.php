@@ -37,7 +37,7 @@ class AuthenticatedSessionController extends Controller
         if (Auth::user()->role === 'admin') {
             return redirect()->route('laporan.index');
         } elseif (Auth::user()->role === 'bendahara') {
-            return redirect()->route('bendahara.dashboard');
+            return redirect()->route('laporan.index');
         }
     }
 
