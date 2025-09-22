@@ -1,47 +1,33 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
-return new class extends Migration
-{
-    /**
-     * Run the migrations.
-     */
+return new class extends Migration {
     public function up(): void
     {
-        // Update kolom role di tabel users
+        // Ubah tipe kolom dan set default (tanpa check)
         Schema::table('users', function (Blueprint $table) {
-            $table->enum('role', ['admin', 'bendahara', 'viewer'])
-                  ->default('bendahara')
-                  ->after('password')
-                  ->change();
+            $table->string('role', 255)->default('bendahara')->nullable(false)->change();
         });
 
-        // Tambah kolom total_anggaran di tabel laporan
-        Schema::table('laporan', function (Blueprint $table) {
-            $table->decimal('total_anggaran', 15, 2)
-                  ->default(0)
-                  ->after('id'); // sesuaikan posisi after-nya
-        });
+        // Hapus constraint lama jika ada
+        DB::statement('ALTER TABLE users DROP CONSTRAINT IF EXISTS users_role_check;');
+
+        // Tambahkan constraint baru dengan CHECK
+        DB::statement(
+            "ALTER TABLE users ADD CONSTRAINT users_role_check CHECK (role IN ('admin', 'bendahara', 'viewer'));"
+        );
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        // Balik ke definisi lama
-        Schema::table('users', function (Blueprint $table) {
-            $table->enum('role', ['admin', 'bendahara'])
-                  ->default('bendahara')
-                  ->after('password')
-                  ->change();
-        });
+        // Drop constraint saat rollback
+        DB::statement('ALTER TABLE users DROP CONSTRAINT IF EXISTS users_role_check;');
 
-        Schema::table('laporan', function (Blueprint $table) {
-            $table->dropColumn('total_anggaran');
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('role')->nullable()->default(null)->change();
         });
     }
 };
