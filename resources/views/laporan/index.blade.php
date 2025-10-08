@@ -224,7 +224,7 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     {{ $item->created_at ? $item->created_at->format('d M Y') : 'N/A' }}
                                 </td>
-                                
+                                @if (auth()->user()->id === $item->user_id || auth()->user()->role === 'admin')
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
                                   <button onclick="showEditAuditModal({{ $item->id }}, '{{ addslashes($item->judul) }}', '{{ $item->total_anggaran }}', '{{ $item->created_at ? $item->created_at->format('Y-m-d') : '' }}', '{{ $item->status }}', '{{ addslashes($item->deskripsi) }}')" 
                                         class="text-indigo-600 hover:text-indigo-900 transition-colors">
@@ -234,6 +234,7 @@
                             
                                     <button onclick="deleteLaporan({{ $item->id }}, '{{ $item->judul }}')" class="text-red-600 hover:text-red-900 transition-colors">Hapus</button>
                                 </td>
+                                 @endif
                             </tr>
                         @empty
                             <tr>

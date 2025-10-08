@@ -121,7 +121,7 @@
                                 <span class="font-medium text-green-700 bg-green-100 px-2 py-1 rounded-full text-xs">Full Access</span>
                             </div>
                             <div class="flex justify-between items-center">
-                                <span class="text-gray-600">Auditor</span>
+                                <span class="text-gray-600">Bendahara</span>
                                 <span class="font-medium text-blue-700 bg-blue-100 px-2 py-1 rounded-full text-xs">Read/Write</span>
                             </div>
                             
@@ -168,7 +168,7 @@
         <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
             <div class="mt-3">
                 <h3 class="text-lg font-medium text-gray-900 mb-4">Tambah Pengguna Baru</h3>
-                <form id="addUserForm" action="{{ route('laporan.store') }}" method="POST" class="space-y-4">
+                <form id="addUserForm" action="{{ route('add.user') }}" method="POST" class="space-y-4">
                     @csrf
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
@@ -187,8 +187,7 @@
                         <select name="role" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                             <option value="">Pilih Role</option>
                             <option value="admin">Admin</option>
-                            <option value="auditor">Auditor</option>
-                            <option value="viewer">Viewer</option>
+                            <option value="bendahara">Bendahara</option>
                         </select>
                     </div>
                     <div class="flex justify-end space-x-3 pt-4">

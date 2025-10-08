@@ -79,13 +79,7 @@
                     Login
                 </button>
 
-                <!-- Register -->
-                <div class="text-center mt-6">
-                    <span class="text-gray-600">Pengguna Baru? </span>
-                    <a href="{{ route('register') }}" class="text-blue-600 hover:text-blue-800 font-semibold">
-                        Daftar disini
-                    </a>
-                </div>
+               
             </form>
         </div>
     </div>

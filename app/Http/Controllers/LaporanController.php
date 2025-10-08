@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Laporan;
 use Illuminate\Http\Request;
-
 use Barryvdh\DomPDF\Facade\Pdf;
+
 class LaporanController extends Controller
 {
     public function index()
@@ -48,42 +48,55 @@ class LaporanController extends Controller
 
     public function edit(Laporan $laporan)
     {
+        // Cek apakah user adalah pemilik laporan atau admin
+        if (auth()->id() !== $laporan->user_id && auth()->user()->role !== 'admin') {
+            abort(403, 'Anda tidak memiliki izin untuk mengedit laporan ini.');
+        }
+
         return view('laporan.edit', compact('laporan'));
     }
 
-        public function update(Request $request, $id)
-        {
-            $laporan = Laporan::findOrFail($id);
+    public function update(Request $request, $id)
+    {
+        $laporan = Laporan::findOrFail($id);
 
-            $laporan->update([
-                'judul' => $request->judul,
-                'total_anggaran' => $request->total_anggaran,
-                'tanggal' => $request->tanggal,
-                'status' => $request->status,
-                'deskripsi' => $request->deskripsi,
-            ]);
-
-            return redirect()->route('laporan.index')->with('success', 'Laporan berhasil diperbarui');
+        // Cek apakah user adalah pemilik laporan atau admin
+        if (auth()->id() !== $laporan->user_id && auth()->user()->role !== 'admin') {
+            abort(403, 'Anda tidak memiliki izin untuk mengubah laporan ini.');
         }
 
-        public function download()
+        $laporan->update([
+            'judul' => $request->judul,
+            'total_anggaran' => $request->total_anggaran,
+            'tanggal' => $request->tanggal,
+            'status' => $request->status,
+            'deskripsi' => $request->deskripsi,
+        ]);
+
+        return redirect()->route('laporan.index')->with('success', 'Laporan berhasil diperbarui');
+    }
+
+    public function download()
     {
         $laporan = Laporan::all();
 
-        // Generate PDF dari view
         $pdf = Pdf::loadView('laporan.pdf', compact('laporan'))
                   ->setPaper('A4', 'portrait');
 
-        // Download file dengan nama sesuai tanggal
         return $pdf->download('laporan-keuangan-' . now()->format('Y-m-d') . '.pdf');
     }
 
     public function destroy($id)
-{
-    $laporan = Laporan::findOrFail($id);
-    $laporan->delete();
+    {
+        $laporan = Laporan::findOrFail($id);
 
-    return redirect()->route('laporan.index')->with('success', 'Laporan berhasil dihapus.');
-}
+        // Cek apakah user adalah pemilik laporan atau admin
+        if (auth()->id() !== $laporan->user_id && auth()->user()->role !== 'admin') {
+            abort(403, 'Anda tidak memiliki izin untuk menghapus laporan ini.');
+        }
 
+        $laporan->delete();
+
+        return redirect()->route('laporan.index')->with('success', 'Laporan berhasil dihapus.');
+    }
 }

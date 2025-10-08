@@ -17,7 +17,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::patch('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.update.password');
-    
+    Route::post('/new-user', [AdminController::class, 'addUser'])->name('add.user');
     Route::get('/laporan', [LaporanController::class,'index'])->name('laporan.index');
     Route::post('/laporan', [LaporanController::class,'store'])->name('laporan.store');
     Route::delete('/laporan/{id}', [LaporanController::class,'destroy'])->name('laporan.destroy');
