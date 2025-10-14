@@ -23,7 +23,7 @@ class LaporanController extends Controller
     {
         $request->validate([
             'judul' => 'required|string|max:255',
-            'deskripsi' => 'required|string',
+            'deskripsi' => 'sometimes|string',
             'tanggal' => 'required|date',
             'status' => 'sometimes|string|in:pending,proses,selesai,menunggu,ditunda',
             'total_anggaran' => 'required|numeric|min:0',
